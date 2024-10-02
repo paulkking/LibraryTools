@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang='en' class=''>
+
+<head>
+
+  <meta charset='UTF-8'>
+  <title>Deproxy Tool</title>
+</head>
+
+<body>
+  <h1>Deproxy tool</h1>
+<input type="text" id="text" size="40" /><button onclick="deproxy()">Deproxy</button>
+
+<p id="demo"></p>
+  
+  <script>
+    const myInput = document.getElementById('text')
+
+    function deproxy() {
+    
+    // Check for ezproxy
+    if (myInput.value.search(/ezproxy/i)!== -1) {
+        if (myInput.value.search(/ezproxy.lib.torontomu.ca\/login\?url/i) !== -1) {
+        var array1 = myInput.value.split(/url=/i);
+        var myOutput = array1.slice(1).join("url=");
+        document.getElementById("demo").textContent= myOutput;                        
+        } else {
+        // Clean domain
+        var array1 = myInput.value.split("//");
+        var array2 = array1.slice(1).join("//").split("/");
+        var array3 = array2[0];
+        array3 = array3.split(".")[0];
+        array3 = array3.replace(/-/g,".");
+        array2 = array2.slice(1).join("/");
+        var myOutput = array1[0] + "//" + array3 + "/" + array2;
+        // Return new string
+        document.getElementById("demo").textContent= myOutput;
+        }
+    } else {
+        document.getElementById("demo").textContent= "This doesn't look like an EZProxy URL.";
+    }
+
+    
+    }
+  </script>
+</body>
+
+</html>
